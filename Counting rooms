@@ -1,0 +1,66 @@
+// हौसला दिलाएगा मंज़िल  
+ 
+#include<bits/stdc++.h>
+ 
+using namespace std;
+#define int long long
+const int mod = 998244353;
+#define F first
+#define S second
+#define pb push_back
+ 
+const int N = 2e5+1;
+ 
+ 
+template<typename... T>
+void debug(T&... args){
+  cout << "\n==================\n";
+  ((cout<< args<<", "), ...);
+  cout << "\n==================\n";
+}
+template<typename T>
+void debug(vector<T>& a){
+  cout << "\n==============\n";
+  for(auto& e:a)cout << e << ' ';
+  cout << "\n==============\n";
+}
+ 
+template<typename... T>
+void put(T&... args) { ((cout << args << " "), ...);}
+int n,m ;
+int check(int i, int j){
+   if(i>=0 and j>=0 and j<m and i<n)return true;else return false;
+}
+
+void dfs(int i , int j , vector<string>&vec){
+  if(!check(i,j))return ;
+  if(vec[i][j]!='.')return ;
+
+  vec[i][j] = 'A';
+  dfs(i+1,j,vec);
+  dfs(i,j+1,vec);
+  dfs(i-1,j,vec);
+  dfs(i,j-1,vec);
+}
+
+void solve(){
+    cin >> n>> m;
+   vector<string>vec(n);
+   for(int i =0 ; i<n ; i++){
+     cin>> vec[i];
+   }
+
+   int ans = 0;
+   for(int i =0 ;i<n ; i++){
+     for(int j =0 ;j<m ; j++){
+          if(vec[i][j]=='.'){ans++; dfs(i,j , vec);}
+     }
+   }
+   cout << ans << '\n';
+}
+ 
+signed main(){
+  // ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  // int t; cin>> t; while(t--)
+  solve();
+}
