@@ -1,0 +1,59 @@
+// हौसला दिलाएगा मंज़िल  
+ 
+#include<bits/stdc++.h>
+ 
+using namespace std;
+#define int long long
+const int mod = 1e9+7;
+#define F first
+#define S second
+#define pb push_back
+ 
+const int N = 2e5+1;
+ 
+template<typename... T>
+void debug(T&... args){
+  cout << "\n==================\n";
+  ((cout<< args<<", "), ...);
+  cout << "\n==================\n";
+}
+template<typename T>
+void debug(vector<T>& a){
+  cout << "\n==============\n";
+  for(auto& e:a)cout << e << ' ';
+  cout << "\n==============\n";
+}
+
+void solve(){
+   string s; cin >> s;
+
+   map<char , int> mp;
+
+   for(auto& e: s)mp[e]++; int p = 0;
+
+   for(auto& e:mp)if(e.second%2){p++; }
+   if(p>1 || (p==1 and s.length()%2==0)){
+     cout << "NO SOLUTION\n"; return ;
+   }
+   
+   if( (p==1 and s.length()%2!=0)){
+     for(auto& e:mp)if(e.second%2)s[s.length()/2] = e.first,e.second--;
+   }
+   int i =0 ; int j = s.length() - 1;
+
+   for(auto& e:mp){
+    
+     while(e.second>0){
+       s[i++] = e.first; s[j--] = e.first;
+       e.second-=2;
+     }
+   }
+
+   cout << s<< '\n';
+}
+
+signed main(){
+  // ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  // int t; cin>> t; while(t--)
+  solve();
+}
