@@ -1,0 +1,38 @@
+// हौसला दिलाएगा मंज़िल  
+
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define int long long
+
+int dfs(int v , vector<vector<int> >& adj , vector<int>& val){
+   if(adj[v].size()==0)return 1LL;
+   
+   for(auto& e:adj[v]){
+   	  val[v] =  val[v] + dfs(e,adj,val);
+   }	
+   return val[v]+1;
+}
+
+void solve(){
+	int n ; cin >> n;
+    vector<int>val(n);
+    vector<vector<int> >adj(n);
+    for(int i = 1; i<n ; i++){
+    	int x; cin >> x;
+    	adj[x-1].push_back(i);
+	}
+	dfs(0,adj,val);
+	for(auto& e:val){
+		cout << e << ' ';
+	}cout << '\n';
+}
+
+signed main(){
+//	ios_base::sync_with_stdio(false); cin.tie(NULL);cout.tie(NULL);
+	
+//	int t; cin >> t; while(t--)
+	solve();
+}
