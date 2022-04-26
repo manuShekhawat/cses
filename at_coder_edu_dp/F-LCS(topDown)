@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+
+const int mod = 998244353;
+
+vector<vector<string> >dp;
+vector<vector<int> >vis;
+string s,t;
+string LCS(int i , int j){
+    // if s[i] == t[j] , Call (i-1 , j-1)
+    // else call max((i-1,j) , (i, j-1))
+    if(i<0 || j<0)return "";
+    if(vis[i][j])return dp[i][j];
+    vis[i][j] = 1;
+    if(s[i]==t[j]){
+       return dp[i][j] =  LCS(i-1 , j-1) ;
+    }
+    else {
+      string s1 = LCS(i , j-1);
+      string s2 = LCS(i-1 , j);
+      
+      if(s1.length() > s2.length())return dp[i][j] = s1;
+      else return dp[i][j] = s2;
+    }
+}
+void solve(){
+   
+    cin >> s >> t;
+    dp.resize(s.length()); fill(dp.begin() , dp.end() , vector<string>(t.length() , ""));
+    vis.resize(s.length()); fill(vis.begin() , vis.end() , vector<int>(t.length(),0));
+
+    string ans = LCS(s.length() -1 , t.length() - 1);
+    reverse(ans.begin() , ans.end());
+    cout << ans << '\n';
+}
+
+signed main(){
+  ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  
+
+  #ifndef ONLINE_JUDGE
+      freopen("input.txt" , "r" , stdin);
+      freopen("output.txt" , "w" , stdout);
+      freopen("error.txt" , "w" ,stderr);
+  #endif
+  
+  // int t; cin >> t; while(t--)
+  solve();
+}
