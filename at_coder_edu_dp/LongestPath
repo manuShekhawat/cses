@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define int long long
+
+const int mod = 998244353;
+
+int N , M ;
+vector<vector<int> >adj;
+vector<int>d;
+
+int dfs(int v){
+  // mujhe ye krna h ki . agarr vo node ka distance nhi h , to dfs lgao child pe
+  if(d[v] >= 0){return d[v];}
+  if(adj[v].size() == 0)return 0;
+  for(auto& e:adj[v]){
+    d[v] = max(d[v] ,dfs(e) + 1);
+  }
+  return d[v];  
+}
+
+void solve(){
+  cin >> N >> M;
+
+  adj.resize(N); d.resize(N); fill(d.begin() , d.end() , -1);
+  for(int i = 0; i<M ; i++){
+    int a, b; cin >> a >> b; a--; b--; 
+    adj[a].push_back(b);
+  }
+
+  // d array stores maximum path between from a node ,cycle to h ni to life chill h
+
+  for(int i = 0; i<N ; i++){
+       dfs(i);
+  }
+
+  int ans = -1;
+  for(auto& e:d)ans = max(ans , e);
+  cout << ans << '\n';
+  
+  }
+
+signed main(){
+  ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+  
+
+  #ifndef ONLINE_JUDGE
+      freopen("input.txt" , "r" , stdin);
+      freopen("output.txt" , "w" , stdout);
+      freopen("error.txt" , "w" ,stderr);
+  #endif
+  
+  // int t; cin >> t; while(t--)
+  solve();
+}
